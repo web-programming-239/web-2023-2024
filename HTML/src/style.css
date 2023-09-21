@@ -1,0 +1,54 @@
+.header {
+    display: flex;
+}
+
+#test_el {
+    color: #8f4545;
+}
+
+.nav-bar {
+    list-style-type: none;
+    text-decoration-color: blue;
+}
+
+/*https://tproger.ru/translations/how-css-flexbox-works/*/
+.nav-bar ul {
+    display: flex;
+}
+
+.nav-bar li {
+    list-style-type: none;
+    margin: 0 1rem;
+}
+
+body {
+    padding: 80px;
+}
+
+a{
+    font-weight: 700;
+}
+
+img {
+    width: 6%;
+}
+
+.middle {
+    padding-top: 2rem;
+}
+
+.footer {
+    font-family: 'Open Sans', 'sans-serif', 'FontAwesome';
+    text-decoration: underline;
+    padding-top: 3rem;
+    text-align: center;
+}
+
+.enter-or-register {
+    margin: 1rem 1rem 1rem auto;
+}
+
+.enter-or-register button{
+    display: inline;
+    margin-top: 1rem;
+}

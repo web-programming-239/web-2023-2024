@@ -1,0 +1,24 @@
+.members-table {
+    padding-top: 2rem;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid black;
+    border-radius: 1rem;
+}
+
+thead {
+    color: blueviolet;
+    border-bottom: solid black 0.1rem;
+}
+
+tr, th {
+    border: black 0.1rem solid;
+}
+
+tr:nth-child(2n) {
+    background: coral;
+}
