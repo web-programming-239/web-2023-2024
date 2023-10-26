@@ -1,0 +1,10 @@
+.square{
+    font-size: 4em;
+    min-width: 2em;
+    min-height: 2em;
+}
+
+.status{
+    font-size: 4em;
+    margin: 0.5em;
+}

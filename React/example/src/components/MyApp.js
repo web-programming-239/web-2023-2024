@@ -35,7 +35,7 @@ function Person({data}) {
 
 function MyApp() {
     return (
-        <div style={{display: "flex", flexDirection: "column" ,alignItems: "center"}}>
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{display: "flex", justifyContent: "center"}}>
                 {persons.map((data) => <Person data={data}/>)}
             </div>
