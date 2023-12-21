@@ -1,0 +1,4 @@
+.idea
+venv
+web/node_modules
+web/.idea
