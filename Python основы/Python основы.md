@@ -278,6 +278,173 @@ a = {}
 print(a.get('test', -1))  # Выведет -1
 ```
 
+## Классы и Объекты
+
+Python поддерживает объектно-ориентированное программирование (ООП), где код структурирован с помощью **классов** и **объектов**.
+### Классы
+
+Класс — это шаблон (схема), который используется для создания объектов. В Python классы объявляются с помощью ключевого слова `class`.
+
+### Пример создания класса:
+```python
+class Dog:
+    # Конструктор класса (специальный метод __init__)
+    def __init__(self, name, breed):
+        self.name = name  # Атрибут (переменная) класса
+        self.breed = breed  # Ещё один атрибут класса
+    
+    # Метод класса
+    def bark(self):
+        print(f"{self.name} says woof!")
+
+# Создание объекта (экземпляра класса)
+my_dog = Dog("Buddy", "Golden Retriever")
+my_dog.bark()  # Выведет: Buddy says woof!
+
+```
+
+Методы класса всегда принимают первым аргументом **self**. Это - объект, у которого вызывали метод
+
+```python
+dog1 = Dog("Buddy1", "Golden Retriever")
+dog2 = Dog("Buddy2", "Golden Retriever")
+dog1.bark() # тут внутри метода bark вместо self окажется объект, лежищий в переменной dog1
+dog2.bark() # а тут - dog2
+```
+
+### Изменение атрибутов класса
+
+```python
+class Cat:
+    def __init__(self, name):
+        self.name = name
+
+    def meow(self):
+        print(f"{self.name} says meow!")
+    
+    def rename(self, new_name):
+        self.name = new_name
+
+my_cat = Cat("Whiskers")
+my_cat.meow()  # Выведет: Whiskers says meow!
+my_cat.rename("Luna")
+my_cat.meow()  # Выведет: Luna says meow!
+```
+
+## Наследование
+
+В Python классы могут наследовать свойства и методы других классов. Это позволяет создать новый класс, основанный на другом классе, и при этом добавлять или переопределять функциональность.
+
+
+```python
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        print(f"{self.name} makes a sound.")
+
+class Dog(Animal):
+    def speak(self):
+        print(f"{self.name} says woof!")
+
+class Cat(Animal):
+    def speak(self):
+        print(f"{self.name} says meow!")
+
+dog = Dog("Buddy")
+dog.speak()  # Выведет: Buddy says woof!
+
+cat = Cat("Whiskers")
+cat.speak()  # Выведет: Whiskers says meow!
+
+```
+
+### Вызов метода родительского класса:
+
+```python
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        print(f"{self.name} makes a sound.")
+
+class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)  # Вызов конструктора родительского класса
+        self.breed = breed
+
+    def speak(self):
+        super().speak()  # Вызов метода родительского класса
+        print(f"{self.name} says woof!")
+
+dog = Dog("Buddy", "Golden Retriever")
+dog.speak()
+# Выведет:
+# Buddy makes a sound.
+# Buddy says woof!
+```
+
+Если необходимо вызвать метод родительского класса, можно использовать функцию `super()`:
+```python
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        print(f"{self.name} makes a sound.")
+
+class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)  # Вызов конструктора родительского класса
+        self.breed = breed
+
+    def speak(self):
+        super().speak()  # Вызов метода родительского класса
+        print(f"{self.name} says woof!")
+
+dog = Dog("Buddy", "Golden Retriever")
+dog.speak()
+# Выведет:
+# Buddy makes a sound.
+# Buddy says woof!
+```
+### Магические методы
+В Python есть набор специальных методов, которые позволяют настраивать поведение объектов с разными встроенными в язык конструкциями. Эти методы не вызывают напрямую, их вызывает сам питон в определенных ситуациях
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+		# Этот метод будт вызыан при попытке привести объект к строке
+        return f"{self.name}, {self.age} лет"
+
+person = Person("Alice", 30)
+print(person)  # Выведет: Alice, 30 лет
+```
+
+```python
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+	    # Этот метод будт вызыан при попытке сложить 2 объекта
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+v1 = Vector(1, 2)
+v2 = Vector(3, 4)
+print(v1 + v2)  # Выведет: (4, 6)
+
+```
 ## Импорты
 
 Для использования внешних модулей и файлов в Python используется команда `import`:
@@ -410,8 +577,10 @@ pip install *название библиотеки*
 Чтобы не было путаницы, для каждого из этих проектов создается своё виртуальное окружение.
 При создании нового проекта Pycharm предложит вам создать виртуальное окружение - **соглашайтесь**
 ![](attachments/Pasted%20image%2020231115152908.png)
-Обратите внимание, что **pip привязан к виртуальному окружению**, если вы поставили библиотеку в одном проекте, 
+Обратите внимание, что **pip привязан к виртуальному окружению**, если вы поставили библиотеку в одном проекте, в
 **она не появится в другом**
+
+https://timeweb.cloud/tutorials/python/kak-sozdat-virtualnoe-okruzhenie
 ### Декораторы:
 Декоратор - это функция-обертка над другой функцией. Он принимает в качестве аргумента исходную функцию и возвращает
 новую, модифицированную.
