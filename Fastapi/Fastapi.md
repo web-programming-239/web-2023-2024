@@ -46,7 +46,7 @@ pip install jinja2
 
 Всё написано [тут](https://fastapi.tiangolo.com/advanced/templates/#using-jinja2templates)
 Обратите внимание на workdir при запуске приложения, иначе fastapi может не найти указанные папки. В идее это можно указать в конфигурации запуска
-![[resources/Pasted image 20241024014851.png]]
+![resources/Pasted image 20241024014851.png](resources/Pasted%20image%2020241024014851.png)
 Если запускаете через консоль, то workdir - это та папка, в которой вы находитесь в момент выполнения команды
 
 
