@@ -32,17 +32,47 @@ https://flask-socketio.readthedocs.io/en/latest/getting_started.html
 
 на стороне сервера всё выглядит очень просто:
 ```python
-app = Flask(__name__)  
-socketio = SocketIO(app, debug=True, cors_allowed_origins='*') # Создаем ещё один объект, перадем в него app
+import uvicorn
+from fastapi import FastAPI
+import socketio
+
+# Создаем асинхронный сервер Socket.IO
+sio = socketio.AsyncServer(async_mode="asgi")
+app = FastAPI()
+
+# Интегрируем Socket.IO с FastAPI
+socket_app = socketio.ASGIApp(sio, other_asgi_app=app)
+
+# Обработчик подключения клиента
+@sio.event
+async def connect(sid, environ):
+    print(f"Клиент подключился: {sid}")
+    await sio.emit("message", {"data": "Вы подключены"}, room=sid)
+
+# Обработчик отключения клиента
+@sio.event
+async def disconnect(sid):
+    print(f"Клиент отключился: {sid}")
+
+# Обработчик стандартного события "message"
+@sio.event
+async def message(sid, data):
+    print(f"Стандартное сообщение от {sid}: {data}")
+
+# Обработчик пользовательского события "chat_message"
+@sio.on("chat_message")
+async def handle_chat_message(sid, data):
+    print(f"Сообщение чата от {sid}: {data}")
+    # Отправляем ответ конкретному клиенту
+    await sio.emit("chat_response", {"data": "Сообщение получено"}, room=sid)
+    # Если нужно отправить сообщение всем клиентам:
+    # await sio.emit("chat_response", {"data": "Новое сообщение"}, broadcast=True)
+
+if __name__ == "__main__":
+    uvicorn.run(socket_app, host="0.0.0.0", port=8000)
+
 ```
 
-```python
-# Дальше все аналогично app.rote
-@socketio.on("msg")  
-def msg(obj):  
-    print(obj) # obj - полученный объект
-    emit("test", "123") # отправка сообщения назад
-```
 Здесь в метод `on()` нужно передать тип. Этот обработчик будет вызываться только для сообщений с типом msg
 метод `emit()` позволяет отправить сообщение в ответ. Чтобы отправить сообщение всем подключенным пользователям, можно использовать `emit("test", "123", broadcast=True)`
 
